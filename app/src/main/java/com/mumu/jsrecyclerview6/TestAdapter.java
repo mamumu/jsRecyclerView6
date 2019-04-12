@@ -57,10 +57,21 @@ public class TestAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext,  listBean.getMessage1(),
-                                Toast.LENGTH_SHORT).show();
+                        switch (v.getId()){
+                            case R.id.item_message1:
+                                Toast.makeText(mContext,  listBean.getMessage1(),
+                                        Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.item_message2:
+                                Toast.makeText(mContext,  listBean.getMessage2(),
+                                        Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+//                        Toast.makeText(mContext,  listBean.getMessage1(),
+//                                Toast.LENGTH_SHORT).show();
                     }
                 });
+
                 break;
         }
     }
