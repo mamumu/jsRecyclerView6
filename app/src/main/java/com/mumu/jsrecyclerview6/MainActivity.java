@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -47,12 +48,13 @@ public class MainActivity extends AppCompatActivity {
             resultBean.setTitle1("小狗" + i);
             resultBean.setTitle2("小猫" + i);
             List<TestEntity.ResultBean.ListBean> list = new ArrayList<>();
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < 13; j++) {
                 TestEntity.ResultBean.ListBean listBean = new TestEntity.ResultBean.ListBean();
                 listBean.setMessage1("小小小狗" + j);
                 listBean.setMessage2("小小小猫" + j);
                 list.add(listBean);
             }
+            resultBean.setList(list);
             resultBean.setSubItems(list);
             mResult.add(resultBean);
             mList.add(resultBean);
@@ -73,20 +75,48 @@ public class MainActivity extends AppCompatActivity {
         //2，设置LayoutManager,LinearLayoutManager表示竖直向下
         rvTest.setLayoutManager(new LinearLayoutManager(this));
         //3，初始化一个无数据的适配器
-        mTestAdapter = new TestAdapter(mList);
+        mTestAdapter = new TestAdapter(null);
         //4，绑定recyclerView和适配器
-        mTestAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_RIGHT);
+        //5，动画加载，默认关闭
+//        mTestAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_RIGHT);
         rvTest.setAdapter(mTestAdapter);
-        //5，给recyclerView设置空布局
-//        mTestAdapter.setEmptyView(emptyView);
-        //6,展开所以
+        //6，给recyclerView设置空布局
+        mTestAdapter.setEmptyView(emptyView);
+        //7,展开所以
         mTestAdapter.expandAll();
-//        mTestAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-//            @Override
-//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//
-//            }
-//        });
+        mTestAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Log.d("aaa",position+"");
+                switch (adapter.getItemViewType(position)){
+                    case TestAdapter.TYPE_LEVEL_0:
+                        switch (view.getId()){
+                            case R.id.item_title1:
+                                Toast.makeText(MainActivity.this,  "333333",
+                                        Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.item_title2:
+                                Toast.makeText(MainActivity.this,  "444444",
+                                        Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        break;
+                    case TestAdapter.TYPE_LEVEL_1:
+                        switch (view.getId()){
+                            case R.id.item_message1:
+                                Toast.makeText(MainActivity.this,  "66666",
+                                        Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.item_message2:
+                                Toast.makeText(MainActivity.this,  "777777",
+                                        Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+
+                        break;
+                }
+            }
+        });
     }
 
     /**
