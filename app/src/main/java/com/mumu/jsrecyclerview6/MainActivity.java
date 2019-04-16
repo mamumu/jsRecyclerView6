@@ -22,6 +22,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author : zlf
+ * date    : 2019/4/16
+ * github  : https://github.com/mamumu
+ * blog    : https://www.jianshu.com/u/281e9668a5a6
+ */
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.rv_test)
@@ -31,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TestAdapter mTestAdapter;
     private ArrayList<TestEntity.ResultBean> mResult = new ArrayList<>();
-    private ArrayList<MultiItemEntity> mList=new ArrayList<>();
+    private ArrayList<MultiItemEntity> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             resultBean.setTitle1("小狗" + i);
             resultBean.setTitle2("小猫" + i);
             List<TestEntity.ResultBean.ListBean> list = new ArrayList<>();
-            for (int j = 0; j < 13; j++) {
+            for (int j = 0; j < 5; j++) {
                 TestEntity.ResultBean.ListBean listBean = new TestEntity.ResultBean.ListBean();
                 listBean.setMessage1("小小小狗" + j);
                 listBean.setMessage2("小小小猫" + j);
@@ -83,32 +89,37 @@ public class MainActivity extends AppCompatActivity {
         //6，给recyclerView设置空布局
         mTestAdapter.setEmptyView(emptyView);
         //7,展开所以
-        mTestAdapter.expandAll();
+//        mTestAdapter.expandAll();
         mTestAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Log.d("aaa",position+"");
-                switch (adapter.getItemViewType(position)){
+                Log.d("aaa", position + "");
+
+                switch (adapter.getItemViewType(position)) {
                     case TestAdapter.TYPE_LEVEL_0:
-                        switch (view.getId()){
+                        // TODO: 2019/4/16 关键代码，获取数据源（头部的）
+                        TestEntity.ResultBean resultBean = (TestEntity.ResultBean) mList.get(position);
+                        switch (view.getId()) {
                             case R.id.item_title1:
-                                Toast.makeText(MainActivity.this,  "333333",
+                                Toast.makeText(MainActivity.this, resultBean.getTitle1(),
                                         Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.item_title2:
-                                Toast.makeText(MainActivity.this,  "444444",
+                                Toast.makeText(MainActivity.this, resultBean.getTitle2(),
                                         Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         break;
                     case TestAdapter.TYPE_LEVEL_1:
-                        switch (view.getId()){
+                        // TODO: 2019/4/16 关键代码，获取数据源（子列表的）
+                        TestEntity.ResultBean.ListBean listBean = (TestEntity.ResultBean.ListBean) mList.get(position);
+                        switch (view.getId()) {
                             case R.id.item_message1:
-                                Toast.makeText(MainActivity.this,  "66666",
+                                Toast.makeText(MainActivity.this, listBean.getMessage1(),
                                         Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.item_message2:
-                                Toast.makeText(MainActivity.this,  "777777",
+                                Toast.makeText(MainActivity.this, listBean.getMessage2(),
                                         Toast.LENGTH_SHORT).show();
                                 break;
                         }

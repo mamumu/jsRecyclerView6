@@ -12,6 +12,12 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author : zlf
+ * date    : 2019/4/16
+ * github  : https://github.com/mamumu
+ * blog    : https://www.jianshu.com/u/281e9668a5a6
+ */
 public class TestAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
 
     public static final int TYPE_LEVEL_0 = 0;
@@ -42,8 +48,10 @@ public class TestAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
                 final TestEntity.ResultBean resultBean = (TestEntity.ResultBean) item;
                 holder.setText(R.id.item_title1, resultBean.getTitle1());
                 holder.setText(R.id.item_title2, resultBean.getTitle2());
+                // TODO: 2019/4/16 关键代码，添加子view的点击事件
                 holder.addOnClickListener(R.id.item_title1);
                 holder.addOnClickListener(R.id.item_title2);
+                //添加该条目的点击事件
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -57,16 +65,6 @@ public class TestAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
                             Toast.makeText(mContext, "展开：" + resultBean.getTitle1(),
                                     Toast.LENGTH_SHORT).show();
                         }
-                        switch (v.getId()) {
-                            case R.id.item_title1:
-                                Toast.makeText(mContext, ((TestEntity.ResultBean) item).getTitle1(),
-                                        Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.item_title2:
-                                Toast.makeText(mContext, ((TestEntity.ResultBean) item).getTitle2(),
-                                        Toast.LENGTH_SHORT).show();
-                                break;
-                        }
                     }
                 });
                 break;
@@ -74,23 +72,15 @@ public class TestAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
                 final TestEntity.ResultBean.ListBean listBean = (TestEntity.ResultBean.ListBean) item;
                 holder.setText(R.id.item_message1, listBean.getMessage1());
                 holder.setText(R.id.item_message2, listBean.getMessage2());
+                // TODO: 2019/4/16 关键代码，添加子view的点击事件
                 holder.addOnClickListener(R.id.item_message1);
                 holder.addOnClickListener(R.id.item_message2);
+                //添加该条目的点击事件
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(mContext, "点击了：" + listBean.getMessage1() + listBean.getMessage2(),
                                 Toast.LENGTH_SHORT).show();
-                        switch (view.getId()) {
-                            case R.id.item_message1:
-                                Toast.makeText(mContext, listBean.getMessage1(),
-                                        Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.item_message2:
-                                Toast.makeText(mContext, listBean.getMessage2(),
-                                        Toast.LENGTH_SHORT).show();
-                                break;
-                        }
                     }
                 });
 
